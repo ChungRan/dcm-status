@@ -20,12 +20,17 @@ def crawlingTest():
     # for select in selects:
     #     print(select.get('href')
 
-    gallList = []
-
+    gallList = [dict() for _ in range(300)]
     for select in selects:
-        select = select.find_all('a')
-        for element in select:
-            gallList.append(element.text)
-
-    gallList.sort()
-    return gallList
+        for element in select.find_all('a'):
+            gallList[int(element.text.split()[0].rstrip('.')) - 1] = {
+                'rank' : int(element.text.split()[0].rstrip('.')),
+                'name' : ' '.join(element.text.split()[1:]),
+                'url' : 'https://gall.dcinside.com' + element.get('href'),
+            }
+    text = ''
+    for gall in gallList:
+        text += str(gall['rank']) + ' ' + gall['name'] + ' ' + gall['url'] + ' <br>\n'
+        
+    print(text)
+    return text
