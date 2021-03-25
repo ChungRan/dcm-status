@@ -6,5 +6,5 @@ class Rank(models.Model):
     date = models.DateField(default = timezone.now())
     rank = models.IntegerField()
     name = models.TextField()
-    url = models.URLField()
+    gall_id = models.TextField()
 
