@@ -27,10 +27,11 @@ def crawlingTest():
                 'rank' : int(element.text.split()[0].rstrip('.')),
                 'name' : ' '.join(element.text.split()[1:]),
                 'url' : 'https://gall.dcinside.com' + element.get('href'),
+                'gall_id' : element.get('href').removeprefix("/mgallery/board/lists/?id=")
             }
     text = ''
     for gall in gallList:
-        text += str(gall['rank']) + ' ' + gall['name'] + ' ' + gall['url'] + ' <br>\n'
+        text += str(gall['rank']) + ' ' + gall['name'] + ' ' + gall['gall_id'] + ' <br>\n'
         
     print(text)
     return text
