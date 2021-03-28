@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse
 
 from . import crawling
 
+
 def test(request):
-    a = crawling.crawlingTest()
-    return HttpResponse(a)
+    crawling.crawlingMinorgaall()
+    return HttpResponse('complete')

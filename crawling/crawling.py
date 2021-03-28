@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+from .models import *
 
 
-def crawlingTest():
+def crawlingMinorgaall():
     # HTTP GET Request
     headers = [
         {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0'}
@@ -33,5 +34,12 @@ def crawlingTest():
     for gall in gallList:
         text += str(gall['rank']) + ' ' + gall['name'] + ' ' + gall['gall_id'] + ' <br>\n'
         
-    print(text)
-    return text
+    
+    todayCrawledDate = CrawledDate.objects.create()
+    for gall in gallList:
+        Rank.objects.create(
+            date = todayCrawledDate,
+            rank = gall['rank'],
+            name = gall['name'],
+            gall_id = gall['gall_id']
+        )
