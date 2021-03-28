@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     #
     'tailwind', # tailwindcss add
     'theme', # tailwindcss add
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -147,3 +148,7 @@ STATICFILES_DIRS = [
 TAILWIND_APP_NAME = 'theme'
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
+CRONJOBS = [
+    ('* 1 * * *', 'dcmStatus.cron.crawling_everyday', '>> /tmp/log/ggbc_cron.log'),
+]
