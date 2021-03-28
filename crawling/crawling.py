@@ -28,7 +28,8 @@ def crawlingMinorgaall():
                 'rank' : int(element.text.split()[0].rstrip('.')),
                 'name' : ' '.join(element.text.split()[1:]),
                 'url' : 'https://gall.dcinside.com' + element.get('href'),
-                'gall_id' : element.get('href').removeprefix("/mgallery/board/lists/?id=")
+                # 'gall_id' : element.get('href').removeprefix("/mgallery/board/lists/?id=")
+                'gall_id': element.get('href')[26:],
             }
     text = ''
     for gall in gallList:
