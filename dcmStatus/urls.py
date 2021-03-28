@@ -19,6 +19,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('test/', include("crawling.urls")),
+    path('test/', views.crawling_everyday),
     path('', views.minorGallRank),
 ]
