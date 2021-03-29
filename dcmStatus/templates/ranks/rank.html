@@ -1,9 +1,45 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<div>
+<div class="flex flex-">
     {% include "base/nav.html" %}
-
-    
+    <div class="flex flex-col w-full">
+        <div class="md:px-32 py-8">
+            <div class="flex flex-col">
+                <div class="text-indigo-800 text-3xl font-semibold">마이너 갤러리</div>
+                <div class="text-4xl">{{ date }}</div>
+                <div class="">
+                    <form action="" method="GET">
+                        <label for=""></label>
+                        <input type="date" name="calendar">
+                        <label for=""></label>
+                        <input type="submit" name="">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="md:px-32 py-8">
+            <div class="shadow overflow-hidden rounded-lg border-b border-gray-200">
+                <table class="min-w-full bg-white">
+                    <thead class="bg-indigo-800 text-white">
+                        <tr>
+                            <th class="w-1/12 text-left py-3 px-4 uppercase font-semibold text-sm">#</th>
+                            <th class="w-5/6 text-left py-3 px-4 uppercase font-semibold text-sm">갤러리</th>
+                            <th class="w-1/12 text-left py-3 px-4 uppercase font-semibold text-sm">전일대비</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        {% for gall in galls %}
+                        <tr class="border-b">
+                            <td class="text-left py-3 px-4">{{ gall.rank }}</td>
+                            <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="{% url 'minorGall' gall.gall_id %}">{{ gall.name }}</a></a></td>
+                            <td class="text-left py-3 px-4">{{ gall.comparedToPreviousday }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     {% include "base/footer.html" %}
 </div>
 {% endblock %}
