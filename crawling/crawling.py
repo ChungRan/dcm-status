@@ -38,16 +38,17 @@ def crawlingMinorgaall():
     
     todayCrawledDate = CrawledDate.objects.create()
     for gall in gallList:
-        # Rank.objects.create(
-        #     date = todayCrawledDate,
-        #     rank = gall['rank'],
-        #     name = gall['name'],
-        #     gall_id = gall['gall_id']
-        # )
-        rank = Rank()
-        rank.date = todayCrawledDate
-        rank.rank = gall['rank']
-        rank.name = gall['name']
-        rank.gall_id = gall['gall_id']
-        rank.comparedToPreviousday = rank.comparedToPreviousday_default()
-        rank.save()
+        Rank.objects.create(
+            date=todayCrawledDate,
+            rank=gall['rank'],
+            name=gall['name'],
+            gall_id=gall['gall_id']
+        )
+
+        # rank = Rank()
+        # rank.date = todayCrawledDate
+        # rank.rank = gall['rank']
+        # rank.name = gall['name']
+        # rank.gall_id = gall['gall_id']
+        # rank.comparedToPreviousday = rank.comparedToPreviousday_default()
+        # rank.save()

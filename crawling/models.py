@@ -25,17 +25,11 @@ class Rank(models.Model):
     rank = models.IntegerField()
     name = models.TextField()
     gall_id = models.TextField()
-    comparedToPreviousday = models.IntegerField()
+    comparedToPreviousday = models.IntegerField(null=True)
 
-    # @receiver(post_save, sender=Rank)
-    # def create_comparedToPreviosday(sender, instance, created, **kwargs):
-    #     if created:
-    #         try:
-    #             yesterday = instance.date.date - datetime.timedelta(1)
-    #             yesterdayRank = Rank.objects.get(date=CrawledDate.objects.get(
-    #                 date=yesterday), gall_id=instance.gall_id).rank
-    #             instance.comparedToPreviousday = yesterdayRank - instance.rank
-    #             instance.save()
-    #         except:
-    #             instance.comparedToPreviousday = 10181018
-    #             instance.save()
+
+@receiver(post_save, sender=Rank)
+def create_comparedToPreviosday(sender, instance, created, **kwargs):
+    if created:
+        instance.comparedToPreviousday = instance.comparedToPreviousday_default()
+        instance.save()
