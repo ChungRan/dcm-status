@@ -12,13 +12,18 @@ def minorGallRank(request):
         date = datetime.datetime.strptime(request.GET["calendar"], '%Y-%m-%d').date()
     except:
         date = timezone.now().date()
-
-    galls = Rank.objects.filter(
-        date=CrawledDate.objects.get(date=date)).order_by('rank')
-    for gall in galls:
-        print(gall.comparedToPreviousday)
-        if gall.comparedToPreviousday == 10181018:
-            gall.comparedToPreviousday = ('New')
+    try:
+        galls = Rank.objects.filter(
+            date=CrawledDate.objects.get(date=date)).order_by('rank')
+        for gall in galls:
+            if gall.comparedToPreviousday == 10181018:
+                gall.comparedToPreviousday = ('New')
+    except:
+        galls = [{
+            'rank': '#',
+            'name': '해당 일자의 데이터를 찾을 수 없습니다',
+            'gall_id': 'DATA_NULL'
+        }]
 
     context = {
         'galls': galls,
@@ -29,7 +34,7 @@ def minorGallRank(request):
 
 
 def minorGall(request, gall_id):
-    print("a")
+    return HttpResponse("기능 개발중입니다")
 
 def crawling_everyday(request):
     crawling.crawlingMinorgaall()

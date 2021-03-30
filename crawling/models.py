@@ -4,8 +4,6 @@ import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-# Create your models here.
-
 
 class CrawledDate(models.Model):
     date = models.DateField(default=timezone.now, unique=True)
