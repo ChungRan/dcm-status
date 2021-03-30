@@ -1,0 +1,1 @@
+web: gunicorn dcmStatus.wsgi --log-file -
