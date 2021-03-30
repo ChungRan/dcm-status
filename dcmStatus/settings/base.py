@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import os, json
+import os
+import json
 from django.core.exceptions import ImproperlyConfigured
 import django_heroku
 
@@ -23,20 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-secret_file = os.path.join(BASE_DIR, 'secret.json') # secrets.json 파일 위치를 명시
 
-with open(secret_file) as f:
-    secrets = json.loads(f.read())
-
-def get_secret(setting, secrets=secrets):
-    """비밀 변수를 가져오거나 명시적 예외를 반환한다."""
+def get_env_variable(var_name):
+    """환경 변수를 가져오거나 예외를 반환한다."""
     try:
-        return secrets[setting]
+        return os.environ[var_name]
     except KeyError:
-        error_msg = "Set the {} environment variable".format(setting)
+        error_msg = "Set the {} environment variable".format(var_name)
         raise ImproperlyConfigured(error_msg)
 
-SECRET_KEY = get_secret("SECRET_KEY")
+
+SECRET_KEY = get_env_variable("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -57,8 +55,8 @@ INSTALLED_APPS = [
     'dcmStatus',
     'crawling',
     #
-    'tailwind', # tailwindcss add
-    'theme', # tailwindcss add
+    'tailwind',  # tailwindcss add
+    'theme',  # tailwindcss add
     'django_crontab',
 ]
 
@@ -157,5 +155,3 @@ CRONJOBS = [
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-
-
