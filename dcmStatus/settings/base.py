@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import json
 from django.core.exceptions import ImproperlyConfigured
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -24,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -57,7 +57,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'dcmStatus.urls'
@@ -141,6 +140,3 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 CRONJOBS = [
     ('* 1 * * *', 'dcmStatus.cron.crawling_everyday', '>> /tmp/log/ggbc_cron.log'),
 ]
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
