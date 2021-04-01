@@ -17,7 +17,12 @@ def minorGallRank(request):
             date=CrawledDate.objects.get(date=date)).order_by('rank')
         for gall in galls:
             if gall.comparedToPreviousday == 10181018:
-                gall.comparedToPreviousday = ('New')
+                gall.comparedToPreviousday = 'New'
+            elif gall.comparedToPreviousday > 0:
+                gall.comparedToPreviousday = '+' + str(gall.comparedToPreviousday)
+            elif gall.comparedToPreviousday == 0:
+                gall.comparedToPreviousday = '-'
+
     except:
         galls = [{
             'rank': '#',

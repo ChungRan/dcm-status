@@ -3,7 +3,7 @@ from crawling import crawling
 
 
 class Command(BaseCommand):
-    help = 'Crawling minorGall Rank'
+    help = 'Crawling minorGall rank'
 
     def handle(self, *args, **options):
         crawling.crawlingMinorgaall()
