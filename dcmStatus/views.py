@@ -6,32 +6,34 @@ import datetime
 
 from crawling import crawling
 
+
 def minorGallRank(request):
     try:
         # print(request.GET["calendar"])
         date = datetime.datetime.strptime(request.GET["calendar"], '%Y-%m-%d').date()
     except:
         date = timezone.now().date()
-    try:
-        galls = Rank.objects.filter(
-            date=CrawledDate.objects.get(date=date)).order_by('rank')
-        for gall in galls:
-            if gall.comparedToPreviousday == 10181018:
-                gall.comparedToPreviousday = 'New'
-            elif gall.comparedToPreviousday > 0:
-                gall.comparedToPreviousday = '+' + str(gall.comparedToPreviousday)
-            elif gall.comparedToPreviousday == 0:
-                gall.comparedToPreviousday = '-'
 
-    except:
-        galls = [{
-            'rank': '#',
-            'name': '해당 일자의 데이터를 찾을 수 없습니다',
-            'gall_id': 'DATA_NULL'
-        }]
+    # try:
+    crawledDate, crawledDateIsCreated = CrawledDate.objects.get_or_create(date=date)
+    ranks = Rank.objects.filter(crawledDate=crawledDate).order_by('rank')
+    for rank in ranks:
+        if rank.comparedToPreviousDay == 10181018:
+            rank.comparedToPreviousDay = 'New'
+        elif rank.comparedToPreviousDay > 0:
+            rank.comparedToPreviousDay = '+' + str(rank.comparedToPreviousDay)
+        elif rank.comparedToPreviousDay == 0:
+            rank.comparedToPreviousDay = '-'
+
+    # except:
+    #     galls = [{
+    #         'rank': '#',
+    #         'name': '해당 일자의 데이터를 찾을 수 없습니다',
+    #         'gall_id': 'DATA_NULL'
+    #     }]
 
     context = {
-        'galls': galls,
+        'ranks': ranks,
         'date': date
     }
 
@@ -40,6 +42,7 @@ def minorGallRank(request):
 
 def minorGall(request, gall_id):
     return HttpResponse("기능 개발중입니다")
+
 
 def crawling_everyday(request):
     crawling.crawlingMinorgaall()

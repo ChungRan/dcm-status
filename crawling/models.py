@@ -10,7 +10,7 @@ class CrawledDate(models.Model):
 
 
 class Rank(models.Model):
-    def comparedToPreviousday_default(self):
+    def comparedToPreviousDay_default(self):
         try:
             yesterday = self.date.date - datetime.timedelta(1)
             yesterdayRank = Rank.objects.get(date=CrawledDate.objects.get(
@@ -19,17 +19,16 @@ class Rank(models.Model):
         except:
             return 10181018
 
-    date = models.ForeignKey("CrawledDate", on_delete=models.CASCADE, null=True)
-    rank = models.IntegerField()
-    name = models.TextField()
-    gall_id = models.TextField()
-    comparedToPreviousday = models.IntegerField(null=True)
+    crawledDate = models.ForeignKey("CrawledDate", on_delete=models.CASCADE, null=True)
+    rank = models.PositiveIntegerField()
+    gall = models.ForeignKey('Gall', on_delete=models.CASCADE)
+    comparedToPreviousDay = models.IntegerField(null=True)
 
 
 @receiver(post_save, sender=Rank)
 def create_comparedToPreviosday(sender, instance, created, **kwargs):
     if created:
-        instance.comparedToPreviousday = instance.comparedToPreviousday_default()
+        instance.comparedToPreviousDay = instance.comparedToPreviousDay_default()
         instance.save()
 
 
@@ -47,11 +46,8 @@ class MinorGall(Gall):
 class MiniGall(Gall):
     pass
 
-# class MiniGall(Gall):
+# class MajorGall(Gall):
 #     pass
-
-# 최근 2주간 평균순위
-# 최근 2주간 평균 게시글 수
 
 
 class StatPostCount(models.Model):

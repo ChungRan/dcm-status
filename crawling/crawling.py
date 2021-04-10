@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from .models import *
+from django.utils import timezone
 
 
 def crawlingMinorgaall():
@@ -34,21 +35,15 @@ def crawlingMinorgaall():
     text = ''
     for gall in gallList:
         text += str(gall['rank']) + ' ' + gall['name'] + ' ' + gall['gall_id'] + ' <br>\n'
-        
     
-    todayCrawledDate = CrawledDate.objects.create()
+    todayCrawledDate, todayCrawledDateIsCreated = CrawledDate.objects.get_or_create(date=timezone.now())
     for gall in gallList:
-        Rank.objects.create(
-            date=todayCrawledDate,
-            rank=gall['rank'],
-            name=gall['name'],
-            gall_id=gall['gall_id']
-        )
+        minorGall, minorGallIsCreated = MinorGall.objects.get_or_create(gallId=gall['gall_id'], name=gall['name'])
+        todayCrawledDate.rank_set.get_or_create(gall=minorGall, rank=gall['rank'])
 
-        # rank = Rank()
-        # rank.date = todayCrawledDate
-        # rank.rank = gall['rank']
-        # rank.name = gall['name']
-        # rank.gall_id = gall['gall_id']
-        # rank.comparedToPreviousday = rank.comparedToPreviousday_default()
-        # rank.save()
+        # Rank.objects.create(
+        #     date=todayCrawledDate,
+        #     rank=gall['rank'],
+        #     name=gall['name'],
+        #     gallId=gall['gall_id']
+        # )

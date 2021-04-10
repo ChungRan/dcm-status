@@ -28,11 +28,11 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
-                        {% for gall in galls %}
+                        {% for rank in ranks %}
                         <tr class="border-b">
-                            <td class="text-left py-3 px-4">{{ gall.rank }}</td>
-                            <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="{% url 'minorGall' gall.gall_id %}">{{ gall.name }}</a></a></td>
-                            <td class="text-left py-3 px-4">{{ gall.comparedToPreviousday }}</td>
+                            <td class="text-left py-3 px-4">{{ rank.rank }}</td>
+                            <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="{% url 'minorGall' rank.gall.gallId %}">{{ rank.gall.name }}</a></a></td>
+                            <td class="text-left py-3 px-4">{{ rank.comparedToPreviousDay }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
