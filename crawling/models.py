@@ -31,3 +31,30 @@ def create_comparedToPreviosday(sender, instance, created, **kwargs):
     if created:
         instance.comparedToPreviousday = instance.comparedToPreviousday_default()
         instance.save()
+
+
+class Gall(models.Model):
+    name = models.TextField()
+    gallId = models.TextField(unique=True)
+    content = models.TextField(blank=True)
+    openingDate = models.DateField(null=True)
+
+
+class MinorGall(Gall):
+    pass
+
+
+class MiniGall(Gall):
+    pass
+
+# class MiniGall(Gall):
+#     pass
+
+# 최근 2주간 평균순위
+# 최근 2주간 평균 게시글 수
+
+
+class StatPostCount(models.Model):
+    date = models.DateField(default=timezone.now)
+    gall = models.ForeignKey('Gall', on_delete=models.CASCADE)
+    postCount = models.PositiveIntegerField()
