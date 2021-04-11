@@ -38,6 +38,14 @@ def minorGall(request, gall_id):
 
     today = timezone.now().date()
 
+    # todayRank
+    crawledDate, crawledDateIsCreated = CrawledDate.objects.get_or_create(date=today)
+    if gall.rank_set.filter(crawledDate=crawledDate).exists():
+        todayRank = str(gall.rank_set.get(crawledDate=crawledDate).rank) + "위"
+    else:
+        todayRank = '정보없음'
+
+    # averageRank
     availableRankCount = 0
     availableRankTotal = 0
     for i in range(14):
@@ -48,15 +56,16 @@ def minorGall(request, gall_id):
             availableRankTotal += gall.rank_set.get(crawledDate=crawledDate).rank
         else:
             continue
-    averageRank = 0 if availableRankCount == 0 else availableRankTotal // availableRankCount
+    averageRank = '정보없음' if availableRankCount == 0 else str(availableRankTotal // availableRankCount) + "위"
 
-    averagePostCount = 0
+    # averagePostCount
+    averagePostCount = '정보없음'
 
     context = {
         'gall': gall,
-        'todayRank': str(gall.rank_set.get(crawledDate=CrawledDate.objects.get(date=timezone.now())).rank) + "위",
-        'averageRank': str(averageRank) + "위",
-        'averagePostCount': str(averagePostCount) + "개",
+        'todayRank': todayRank,
+        'averageRank': averageRank,
+        'averagePostCount': averagePostCount,
     }
 
     return render(request, 'gall/minorGall.html', context)
@@ -64,4 +73,4 @@ def minorGall(request, gall_id):
 
 def crawling_everyday(request):
     crawling.crawlingMinorgaall()
-    return HttpResponse("aa")
+    return HttpResponse("crawling")
