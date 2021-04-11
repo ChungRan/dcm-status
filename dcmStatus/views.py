@@ -25,13 +25,6 @@ def minorGallRank(request):
         elif rank.comparedToPreviousDay == 0:
             rank.comparedToPreviousDay = '-'
 
-    # except:
-    #     galls = [{
-    #         'rank': '#',
-    #         'name': '해당 일자의 데이터를 찾을 수 없습니다',
-    #         'gall_id': 'DATA_NULL'
-    #     }]
-
     context = {
         'ranks': ranks,
         'date': date
@@ -41,7 +34,32 @@ def minorGallRank(request):
 
 
 def minorGall(request, gall_id):
-    return HttpResponse("기능 개발중입니다")
+    gall = get_object_or_404(MinorGall, gallId=gall_id)
+
+    today = timezone.now().date()
+
+    availableRankCount = 0
+    availableRankTotal = 0
+    for i in range(14):
+        date = today - datetime.timedelta(i)
+        crawledDate, crawledDateIsCreated = CrawledDate.objects.get_or_create(date=date)
+        if gall.rank_set.filter(crawledDate=crawledDate).exists():
+            availableRankCount += 1
+            availableRankTotal += gall.rank_set.get(crawledDate=crawledDate).rank
+        else:
+            continue
+    averageRank = 0 if availableRankCount == 0 else availableRankTotal // availableRankCount
+
+    averagePostCount = 0
+
+    context = {
+        'gall': gall,
+        'todayRank': str(gall.rank_set.get(crawledDate=CrawledDate.objects.get(date=timezone.now())).rank) + "위",
+        'averageRank': str(averageRank) + "위",
+        'averagePostCount': str(averagePostCount) + "개",
+    }
+
+    return render(request, 'gall/minorGall.html', context)
 
 
 def crawling_everyday(request):

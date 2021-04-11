@@ -8,6 +8,9 @@ from django.db.models.signals import post_save
 class CrawledDate(models.Model):
     date = models.DateField(default=timezone.now, unique=True)
 
+    def __str__(self):
+        return str(self.crawledDate.date)
+
 
 class Rank(models.Model):
     def comparedToPreviousDay_default(self):
@@ -24,6 +27,9 @@ class Rank(models.Model):
     gall = models.ForeignKey('Gall', on_delete=models.CASCADE)
     comparedToPreviousDay = models.IntegerField(null=True)
 
+    def __str__(self):
+        return str(self.crawledDate.date) + " " + self.gall.name + " 갤러리 순위"
+
 
 @receiver(post_save, sender=Rank)
 def create_comparedToPreviosday(sender, instance, created, **kwargs):
@@ -37,6 +43,9 @@ class Gall(models.Model):
     gallId = models.TextField(unique=True)
     content = models.TextField(blank=True)
     openingDate = models.DateField(null=True)
+
+    def __str__(self):
+        return self.name + " 갤러리"
 
 
 class MinorGall(Gall):

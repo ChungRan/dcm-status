@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<div class="flex flex-">
+<div class="flex">
     {% include "base/nav.html" %}
     <div class="flex flex-col w-full">
-        <div class="md:px-32 py-8">
+        <div class="lg:px-32 py-8">
             <div class="flex flex-col">
                 <div class="text-indigo-800 text-3xl font-semibold">마이너 갤러리</div>
                 <div class="text-4xl">{{ date }}</div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="md:px-32 py-8">
+        <div class="lg:px-32 py-8">
             <div class="shadow overflow-hidden rounded-lg border-b border-gray-200">
                 <table class="min-w-full bg-white">
                     <thead class="bg-indigo-800 text-white">
