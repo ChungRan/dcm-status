@@ -9,15 +9,16 @@ class CrawledDate(models.Model):
     date = models.DateField(default=timezone.now, unique=True)
 
     def __str__(self):
-        return str(self.crawledDate.date)
+        return str(self.date)
 
 
 class Rank(models.Model):
     def comparedToPreviousDay_default(self):
         try:
-            yesterday = self.date.date - datetime.timedelta(1)
-            yesterdayRank = Rank.objects.get(date=CrawledDate.objects.get(
-                date=yesterday), gall_id=self.gall_id).rank
+            yesterday = self.crawledDate.date - datetime.timedelta(1)
+            # yesterdayCrawledDate, yesterdayCrawledDateIsCreated = CrawledDate.get_or_create(date = yesterday)
+            yesterdayCrawledDate = CrawledDate.objects.get(date=yesterday)
+            yesterdayRank = Rank.objects.get(crawledDate=yesterdayCrawledDate, gall=self.gall).rank
             return yesterdayRank - self.rank
         except:
             return 10181018
