@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('test/', views.crawling_everyday),
+    path('test/', views.crawling_everyday),
     path('', views.minorGallRank, name="minorGallRank"),
     path('minorgall/<str:gall_id>', views.minorGall, name="minorGall"),
 ]
