@@ -27,3 +27,6 @@ DcMinorGall 순위 크롤링앱
 `python manage.py crontab show`
 
 `python manage.py crontab remove`
+
+### MinorGall Crawling
+`python manage.py minor_crawling`

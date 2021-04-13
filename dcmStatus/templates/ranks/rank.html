@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<div class="flex flex-">
+<div class="flex">
     {% include "base/nav.html" %}
     <div class="flex flex-col w-full">
-        <div class="md:px-32 py-8">
+        <div class="lg:px-32 py-8">
             <div class="flex flex-col">
                 <div class="text-indigo-800 text-3xl font-semibold">마이너 갤러리</div>
                 <div class="text-4xl">{{ date }}</div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="md:px-32 py-8">
+        <div class="lg:px-32 py-8">
             <div class="shadow overflow-hidden rounded-lg border-b border-gray-200">
                 <table class="min-w-full bg-white">
                     <thead class="bg-indigo-800 text-white">
@@ -28,11 +28,11 @@
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
-                        {% for gall in galls %}
+                        {% for rank in ranks %}
                         <tr class="border-b">
-                            <td class="text-left py-3 px-4">{{ gall.rank }}</td>
-                            <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="{% url 'minorGall' gall.gall_id %}">{{ gall.name }}</a></a></td>
-                            <td class="text-left py-3 px-4">{{ gall.comparedToPreviousday }}</td>
+                            <td class="text-left py-3 px-4">{{ rank.rank }}</td>
+                            <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="{% url 'minorGall' rank.gall.gallId %}">{{ rank.gall.name }}</a></a></td>
+                            <td class="text-left py-3 px-4">{{ rank.comparedToPreviousDay }}</td>
                             {% endfor %}
                         </tr>
                     </tbody>
