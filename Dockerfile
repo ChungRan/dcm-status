@@ -1,17 +1,20 @@
 #./Dockerfile 
-FROM python:3.9.4
 
-RUN apt-get -y update
+ENV PYTHONUNBUFFERED=0
 
-## Copy all src files 
-WORKDIR /web
-COPY . .
+FROM ubuntu:18.04
 
-## Install packages 
-RUN pip install -r requirements.txt
+RUN apt-get update && \
+    apt-get install -y python3-pip python3-dev && \
+    apt-get clean
 
-## Run the application on the port 8080 
-EXPOSE 8000
+WORKDIR /web/
 
+ADD ./backend/requirements.txt /web/
+RUN pip3 install -r requirements.txt
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dcmStatus.wsgi:application"]
+ADD . /web/
+
+EXPOSE 80
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "example.wsgi:application"]

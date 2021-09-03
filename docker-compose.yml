@@ -1,0 +1,42 @@
+version: "3.8" # Compose file 버전
+
+volumes:
+  postgres_db: {}
+  static_volume:
+
+services: # 이 아래로 서비스들을 적는다
+  django: # 서비스의 이름을 django로 지정
+    container_name: django # 컨테이너 이름을 지정
+    build: . # docker build를 실행할 경로
+    restart: always
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    ports: # docker의 -p 8000:8000 와 같은 부분
+      - 80:8000
+    volumes: # docker의 -volume 과 같은 부분
+      - .:/web/
+    depends_on: # 서비스간의 종속성 순서대로 서비스를 시작한다. eg)db 실행 이후 django가 실행됨
+      - db
+    environment: # docker의 -e 와 같은 부분
+      - DJANGO_DEBUG=False
+      - SECRET_KEY=fj4389j92nd398192
+      - DJANGO_ALLOWED_HOST=localhost
+      - SQL_DATABASE=postgresdb
+      - SQL_USER=postgresuser
+      - SQL_PASSWORD=postgrespass
+      - SQL_HOST=db
+      - SQL_PORT=5432
+
+  db:
+    container_name: db
+    image: postgres
+    volume: postgres_db:/var/lib/postgresql/data
+   environment: 
+      - POSTGRES_DB=postgresdb
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespass
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_db:/var/lib/mysql/
+  
