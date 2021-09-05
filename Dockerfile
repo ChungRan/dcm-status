@@ -14,6 +14,6 @@ RUN pip3 install -r requirements.txt
 
 ADD . /web/
 
-EXPOSE 80
+EXPOSE 8000
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "dcmStatus.wsgi"]
