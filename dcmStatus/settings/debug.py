@@ -19,4 +19,4 @@ def get_secret(setting, secrets=secrets):
         raise ImproperlyConfigured(error_msg)
 
 
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = get_secret("DJANGO_SECRET_KEY")
