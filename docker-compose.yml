@@ -17,7 +17,7 @@ services:
       - db
     environment: # docker의 -e 와 같은 부분
       - DJANGO_DEBUG=False
-      - DJANGO_SECRET_KEY=fj4389j92nd398192
+      - DJANGO_SECRET_KEY=
       - DJANGO_ALLOWED_HOST=localhost
       - SQL_DATABASE=postgresdb
       - SQL_USER=postgresuser
@@ -28,7 +28,7 @@ services:
   db:
     container_name: db
     image: postgres
-   environment: 
+    environment: 
       - POSTGRES_DB=postgresdb
       - POSTGRES_USER=postgresuser
       - POSTGRES_PASSWORD=postgrespass
@@ -37,4 +37,13 @@ services:
       - 5432:5432
     volumes:
       - postgres_db:/var/lib/postgres/data
-  
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80/tcp"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/staticfiles
+    depends_on:
+      - django
