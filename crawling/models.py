@@ -33,7 +33,7 @@ class Rank(models.Model):
 
 
 @receiver(post_save, sender=Rank)
-def create_comparedToPreviosday(sender, instance, created, **kwargs):
+def create_comparedToPreviousday(sender, instance, created, **kwargs):
     if created:
         instance.comparedToPreviousDay = instance.comparedToPreviousDay_default()
         instance.save()

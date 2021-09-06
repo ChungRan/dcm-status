@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     #
     'tailwind',  # tailwindcss add
     'theme',  # tailwindcss add
+    #
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
