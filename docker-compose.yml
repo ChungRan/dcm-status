@@ -19,6 +19,7 @@ services:
       - DJANGO_DEBUG=False
       - DJANGO_SECRET_KEY=
       - DJANGO_ALLOWED_HOST=localhost
+      - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=pgdb
       - SQL_USER=pguser
       - SQL_PASSWORD=pgpass
@@ -35,7 +36,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_db:/var/lib/postgres/data
+      - postgres_db:/var/lib/postgresql/data
   nginx:
     container_name: nginx
     image: nginx:latest
