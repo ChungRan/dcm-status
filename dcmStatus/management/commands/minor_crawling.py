@@ -6,6 +6,6 @@ class Command(BaseCommand):
     help = 'Crawling minorGall rank'
 
     def handle(self, *args, **options):
-        crawling.crawlingMinorgaall()
+        crawling.crawlingMinorgall()
 
         self.stdout.write('MinorGall crawling finished')
