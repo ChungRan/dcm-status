@@ -4,7 +4,7 @@ FROM ubuntu:18.04
 ENV PYTHONUNBUFFERED=0
 
 RUN apt-get update && \
-    apt-get install -y python3-pip python3-dev cron && \
+    apt-get install -y python3-pip python3-dev cron libpq-dev && \
     apt-get clean
 
 WORKDIR /web/
